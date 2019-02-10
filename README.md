@@ -1,4 +1,4 @@
-# CppCmakeSfmlGTestIntro
+# C++, CMake, Sfml und GTest Intro fürs SoPra
 ## Einleitung C++ (wieso oftmals schwierig angesehen)
  * Keine automatische Speicherverwaltung (aber Standardlibrary hilft + Referenzen)
  * Es existiert undefiniertes Verhalten (Null-Pointer, fehlendes return, division durch 0)
@@ -21,10 +21,10 @@
  * Viele Übersetzungseinheiten mit Abhängigkeiten zueinander
  * => Make gut aber schlecht wenn viele Plattformen und Libraries
  * CMake => automatisierte Makefiles (oder anderes)
- * Demo einfaches Hello World (**Demo 0**)
+ * Demo einfaches Hello World (**Demo 0**, vim)
  
 ## Einfaches Hello World
- * Entsprechendes C++ File erstellen (**Demo 1**
+ * Entsprechendes C++ File erstellen (**Demo 1**, vim)
  * include nochmal erklären (unterschied zwischen < und " und C und C++ Headern)
  * Keine main Klasse!
  * namespaces
@@ -67,10 +67,25 @@
  * Iterator: wie pointer nur allgemein (überladenen Operatoren)
  
 ## Einleitung "Flummi"
-## Klassendiagramm
+ * Demo Projekt
+ * OOP, SFML
+ * Einleitung CLion
+ 
 ## Implementierung (zusammen)
+ * **Demo 2** (Clion)
+
 ## Erweiterung um Konfig aus JSON
+ * Einleitung nlohmann::json
+ * Wieso keine reflections (schlecht anpassbar)
+ * Einleitung streams
+ * **Demo 3** (Clion)
+ 
 ## Multithreading
 ## GTest
+ * Ergänzen von Demo 3 durch Unit Tests (triviale Tests)
+ * Einbauen in CMake, Demo von CLion support
+ 
+## Tools (Asan, Valgrind, clang-tidy)
+## Doxygen
 ## Weiterführend (CGL, godbolt.org, CppRef, SFML Doku...)
 ## Fragen
