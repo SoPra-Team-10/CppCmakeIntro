@@ -1,0 +1,49 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{soul}
+\usepackage{pdfpcnotes}
+
+\usetheme{default}
+\usecolortheme{dove}
+
+\title{C++, CMake und GTest}
+\author{Paul Nykiel}
+\date{\today}
+
+\begin{document}
+\maketitle
+\frame{\tableofcontents[currentsection]}
+
+\section{Einleitung}
+\begin{frame}
+    \frametitle{Was ist C++}
+    \begin{itemize}
+        \item \st{C with classes} \pnote{Ursprünglicher Name}
+        \item C++11! \pnote{Neuer Standard inzwischen 17 bald 20}
+        \item Standardisiert und offen \pnote{Viele Compiler}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{C++ im Vergleich zu Java, C\#}
+    \begin{itemize}
+        \item Undefiniertes Verhalten 
+            \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht kontrolliert werden z.B. Microcontroller}
+        \item Keine automatische Speicherverwaltung 
+            \pnote{Performanter Code! Systemnah! Wenn benötigt liefert die STL passende Container, nicht der Compiler}
+        \item Kleiner Sprachkern 
+            \pnote{60 Schlüsselwörter, C\# z.B. 86. Keine UI, kein Networking...}
+        \item Templates 
+            \pnote{Nicht generics, viel mächtiger, z.B. Boost MSM, sichere Pointer (Guideline support library)}
+        \item Operatorenüberladung
+            \pnote{Bsp. Vektor}
+        \item Tendentiell weniger tiefe Vererbung
+            \pnote{Z.b. Container und Iteratoren, keine Überklasse aber Eigenschaften (forward-Iterator), dadurch weniger Boilerplate}
+        \item Mehrfachvererbung
+    \end{itemize}
+\end{frame}
+
+\section{Buildsystem}
+
+\end{document}
