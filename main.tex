@@ -41,9 +41,150 @@
         \item Tendentiell weniger tiefe Vererbung
             \pnote{Z.b. Container und Iteratoren, keine Überklasse aber Eigenschaften (forward-Iterator), dadurch weniger Boilerplate}
         \item Mehrfachvererbung
+            \pnote{Dadurch keine Interfaces notwendig}
+        \item Klar definierte Objektlebenszeit
+            \pnote{Konstruktor, Destruktor, Scope}
     \end{itemize}
 \end{frame}
 
-\section{Buildsystem}
+\section{Getting Started}
+
+\begin{frame}
+    \frametitle{Ein erstes Beispiel}
+    \pnote{Hello World, erklärung: Include, keine main-Klasse, namespaces, operatorenüberladung}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Vom Sourcecode zur ausführbaren Datei}
+    \begin{itemize}
+        \item Präprozessor 
+            \pnote{Erklärung include und define an Hello World Bsp (gcc -E)}
+        \item C++-Compiler 
+            \pnote{Übersetzten von der Übersetzungseinheit in Maschinencode}
+        \item Linker 
+            \pnote{Baut fertigen Code zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
+        \item includes sichern Typkonsitenz
+            \pnote{Unterschied Definition und Deklaration, Doku im Header gut für Übersicht}
+        \item Templates müssen im Header definiert werden
+            \pnote{Compiler muss alle instanziierungen kennen, langsamer Buildprozess}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Beispiel Bibliothek}
+    \pnote{Zweites Cpp File, alles einfach in g++ schmeißen,
+    Message als std::string (nicht ref oder so)}
+\end{frame}
+
+\section{CMake}
+
+\begin{frame}
+    \frametitle{Warum CMake}
+    \begin{itemize}
+        \item Nur geänderte Übersetzungseinheiten neu kompilieren 
+            \pnote{erkennt welche Files geändert wurde}
+        \item Einzelner Befehl an Compiler wird zu kompliziert
+            \pnote{Vor allem bei vielen Flags}
+        \item Portabilität
+            \pnote{GCC wird nie explizit genannt, es wird nur ein Compiler auf Basis von Env-Variablen gesucht Flags Portabel z.B. Version}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Beispiel CMake}
+    \pnote{Einfaches CMake File dazu bauen}
+    %TODO wie muss das aussehen?
+\end{frame}
+
+%TODO Hier eventuell SFML
+
+\section{Mehr C++}
+
+\begin{frame}
+    \frametitle{Copy und Move}
+    \begin{itemize}
+        \item Alles wird immer kopiert 
+            \pnote{Funktionsargumente zuweisung...}
+        \item Simpel 
+            \pnote{Vgl. komisches Java Verhalten}
+        \item Performance 
+            \pnote{Aber Performance sehr wichtig in C++}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Pointer}
+    \begin{itemize}
+        \item Pointer 
+            \pnote{Vererbt von C}
+        \item Angst!
+        \item Gefährlich!
+        \item Böse!
+        \item Nicht schlimm aber viel Potential sachen kaputt zu machen
+            \pnote{Leaks, Owner, selbst Borchert macht Fehler bei malloc in Klausur}
+        \item Gehört nicht in die Anwendungslogik
+            \pnote{Permanente Fehlerquelle, Zeitverschwendung}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Smart-Pointer}
+    \begin{itemize}
+        \item Funktionen aus der Standardlibrary
+            \pnote{Erwähnung Operatorenüberladung und Lifetime}
+        \item unique\_ptr 
+            \pnote{Quasi Drop-In-Replacement für Raw-Ptr, machen selber den Speicher am Ende der Lebenszeit Frei}
+        \item Genau ein Owner
+            \pnote{Explizit verboten zu kopieren (=delete), Bsp. kopieren in Klasse, jetzt uneindeutiger Owner}
+        \item shared\_ptr 
+            \pnote{Zusätzlich Zählen von Instanzen (siehe Copy-Constructor)}
+        \item Quasi immer nutzbar
+            \pnote{Etwas weniger performant}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Referenzen}
+    \begin{itemize}
+        \item Sprachfeature kein Library-Feature
+        \item Können nicht null sein
+        \item Können aber ungültig werden
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Zusammenfassung Pointer}
+    \begin{itemize}
+        \item Raw-Pointer: Wird quasi nie verwendet
+            \pnote{Ausser pre C++11 und mit C APIs}
+        \item Unique-Pointer: Ersatz für Raw-Pointer
+            \pnote{Limitierung: Ein Owner}
+        \item Shared-Pointer: Sichere Pointer für beliebig viele Ownerr
+            \pnote{Am Ähnlichsten zu Java}
+        \item Referenzen: Oftmals um Kopien zu vermeiden
+            \pnote{Sprachfeature}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Beispiel Referenzen}
+    \pnote{Frage welche Sorte Pointer. HelloWorld Lib Ergänzen mit Referenzen, jetzt in CLIon}
+\end{frame}
+
+\section{Ein bisschen Theorie}
+
+\begin{frame}
+    \frametitle{Const-Correctness}
+    \begin{itemize}
+        \item Alles per Referenz: Super Effizient aber Fehlerquelle
+            \pnote{Beispiel: ausversehen einfügen in Map}
+        \item Const-Referenzen
+            \pnote{Ergänze Beispiel}
+        \item Const-Memberfunktionen
+            \pnote{Beispiel getter}
+        \item Mutable
+            \pnote{Beispiel Mutex, nicht immer!}
+    \end{itemize}
+\end{frame}
 
 \end{document}
