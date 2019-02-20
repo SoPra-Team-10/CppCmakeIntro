@@ -23,7 +23,7 @@
                 basicstyle=\ttfamily,
                 keywordstyle=\color{blue}\ttfamily,
                 stringstyle=\color{red}\ttfamily,
-                commentstyle=\color{green}\ttfamily,
+                commentstyle=\color{purple}\ttfamily,
                 morecomment=[l][\color{magenta}]{\#}
 }
 
@@ -80,7 +80,7 @@
 \section{Ein erstes C++ Programm}
 
 \begin{frame}
-    \frametitle{Beispiel: Hello World}
+    \Huge{Beispiel: Hello World}
     \pnote{Hello World. Erklärung: include, keine main-Klasse, namespaces, Operatorenüberladung}
 \end{frame}
 
@@ -105,7 +105,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Beispiel: Eine zweite Übersetzungseinheit}
+    \Huge{Beispiel: Eine zweite Übersetzungseinheit}
     \pnote{Zweites Cpp File, alles einfach in g++ schmeißen,
     Message als std::string (nicht ref)}
 \end{frame}
@@ -127,7 +127,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Beispiel CMake}
+    \Huge{Beispiel: CMake}
     \pnote{Einfaches CMake File dazu bauen}
     %TODO wie muss das aussehen?
 \end{frame}
@@ -234,11 +234,11 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Beispiel: Referenzen}
+    \Huge{Beispiel: Referenzen}
     \pnote{Frage welche Sorte Pointer. HelloWorld Lib Ergänzen mit Referenzen, jetzt in CLIon}
 \end{frame}
 
-\section{Ein bisschen Theorie}
+\section{Design Pattern}
 
 \begin{frame}
     \frametitle{Const-Correctness}
@@ -258,7 +258,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Beispiel: Const-Correctness}
+    \Huge{Beispiel: Const-Correctness}
     \pnote{const einfügen}
 \end{frame}
 
@@ -292,16 +292,211 @@
     \pnote{Initializierung in Braced-Initializer, Super-Konstruktor, this als Pointer}
 \end{frame}
 
+\begin{frame}
+    \Huge{Beispiel: HelloWorld OOP}
+\end{frame}
+
+\section{Noch mehr C++}
+\begin{frame}
+    \frametitle{Type-Deduction}
+    \lstinputlisting{examples/typededuction.cpp}
+    \pnote{Typ wird hergeleitet, oftmals Praktisch (vgl. Iterator), spart redundanz. Potentielle Fehlerquelle, z.B. Proxy klasse (vgl. std::vector<bool>)}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Lambda-Ausdrücke und Funktionen}
+    \lstinputlisting{examples/lambda.cpp}
+    \pnote{Lambda, capute group, argumente. Bind um Argumente fest zu binden (oder Reihenfolge ändern)}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Kurzeinführung Templates}
+    \lstinputlisting{examples/template.cpp}
+    \pnote{Definition von template mit Typen, Type Deduktion}
+\end{frame}
+
 \section{STL}
 
 \begin{frame}
     \frametitle{STL}
     \begin{itemize}
         \item Standard Template Library
-        \item String, Math, Date \& Time
+            \pnote{Standardlibrary, wird von der libc zur Verfügung gestellt, nicht immer existent z.B. MC, aber mit OS schon. Grob Aufteilung:}
+            \pause
+        \item Utility
+            \pnote{String, Math, Date \& Time, Smart Pointer}
+            \pause
         \item Container
+            \pnote{Strukturierte Sammlung von Objekten}
+            \pause
+        \item Algorithmen
+            \pnote{Standardalgorithmen oftmals mit Containern}
         \item IO
+            \pnote{Standard-IO, Dateizugriff}
+            \pause
         \item Concurrency
+            \pnote{Threads und Locking Mechanismen}
+    \end{itemize}
+    \pnote{Jeweils kleine Auswahl zeigen}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Utility}
+    \begin{itemize}
+        \item \lstinline{std::string}
+            \pnote{Wie in Java}
+            \pause
+        \item \lstinline{std::unique\_ptr<T>}
+            \pnote{Siehe oben}
+            \pause
+        \item \lstinline{std::shared\_ptr<T>}
+            \pnote{Siehe oben}
+            \pause
+        \item \lstinline{std::chrono}
+            \pnote{Nur der Namespace, diverseste Funktionen}
+            \pause
+        \item \lstinline{std::sin()} \ldots
+            \pnote{Auch exotisches wie Riemann-Zeta Funktion}
+            \pause
+        \item \lstinline{std::complex} \ldots
+            \pnote{Komplexe Zahlen und Hilfsfunktionen}
+            \pause
+        \item \lstinline{std::normal\_distribution} \ldots
+            \pnote{Diverse Verteilungen und RNGs}
+            \pause
+        \item \lstinline{std::function<T(A...)>}
+            \pnote{Behandlung von Callable (Funktionen) wie Variablen (vgl. Funktionspointer)}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Container}
+    \begin{itemize}
+        \item \lstinline{std::array<T, N>}
+            \pnote{Größe muss zu Compile-Time feststehen, wie Array in C nur Sicher, Zugriff O(1), Einfügen unmöglich}
+            \pause
+        \item \lstinline{std::vector<T>}
+            \pnote{Dynamisch angelegtes Array, Elemente können hinzugefügt werden aber nicht effizient, Zugriff O(1), Einfügen worst case O(n)}
+            \pause
+        \item \lstinline{std::deque<T>}
+            \pnote{Verlinkte Array-Liste, Ausprache!, Zugriff O(1) (aber langsamer als vector), Einfügen an einem Ende O(1), Einfügen in der Mitte O(n)}
+            \pause
+        \item \lstinline{std::list<T>} und \lstinline{std::forward\_list<T>}
+            \pnote{Einfach bzw. doppelt verkettete Liste, Zugriff O(1), Einfügen O(1)}
+            \pause
+        \item \lstinline{std::set<T>} und \lstinline{std::map<K, V>}
+            \pnote{Menge und Abbildung von Key auf Value, finden von Elementen in O(log(n(), einfügen in O(log(n))}
+            \pause
+        \item \lstinline{std::tuple<T...>} und \lstinline{std::pair<T1, T2>}
+            \pnote{Genau genommen kein Container, Sammlung von mehreren bzw. 2 Objekten von unterschiedlichem Typ. Typen und Anzahl müssen zu Compile-Time bekannt sein}
+            \pause
+        \item \lstinline{std::optional<T>}
+            \pnote{Variable vom Typ T die nicht existieren muss, zum Beispiel als Return-Wert mit Fehler}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Iteratoren}
+    \lstinputlisting{examples/iterator.cpp}
+    \pnote{Type deduction wäre möglich. Wie Pointer nur abstrakt, z.B. auch bei Liste, zentrales Element für Container und Algorithmen}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Algorithmen}
+    \begin{itemize}
+        \item \lstinline{std::transform}
+            \pnote{Wendet eine Funktion auf jedes Element eines Containers an}
+            \pause
+        \item \lstinline{std::sort}
+            \pnote{Sortiert ein Container, es kann ein eigener Komperator angegeben werden}
+            \pause
+        \item \lstinline{std::max}, \lstinline{std::max\_element} \ldots
+            \pnote{Findet größtes/kleinstes Element/Index}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{IO}
+    \pnote{Alles auf Basis von "Streams"}
+    \begin{itemize}
+        \item \lstinline{std::istream} und \lstinline{std::ostream}
+            \pnote{Abstrakte input und output Streams}
+            \pause
+        \item \lstinline{std::cout}, \lstinline{std::cerr} und \lstinline{std::cin}
+            \pnote{Stellen Streams zur Verfügung für Standardein-/Ausgabe}
+            \pause
+        \item \lstinline{std::fstream}
+            \pnote{Dateistream (RAII!)}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Concurrency}
+    \begin{itemize}
+        \item \lstinline{std::thread}
+            \pnote{Startet neuen Thread aus callable}
+            \pause
+        \item \lstinline{std::launch} und \lstinline{std::future<T>}
+            \pnote{Abstraktion, asynchroner Funktionsaufruf, ergebniss in Future}
+            \pause
+        \item \lstinline{std::mutex} und \lstinline{std::lock<T>}
+            \pnote{Gegenseitiger Ausschluss, Lock sperrt und entsperrt automatisch (RAII!)}
+    \end{itemize}
+\end{frame}
+
+\section{Praxis}
+
+\section{Tools}
+\begin{frame}
+    \frametitle{GTest}
+    \lstinputlisting{examples/gtest.cpp}
+    \pnote{Diverseste Bedinungen, z.B. auch Float, integration in CLion}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Doxygen}
+    \lstinputlisting{examples/doxygen.cpp}
+    \pnote{Vergleiche JavaDoc, besonderheit: tparam}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Debugging und Fehlersuche}
+    \begin{itemize}
+        \item GDB o.ä.
+            \pnote{Debugger, quasi beliebig, wichtigestes Tool}
+            \pause
+        \item Valgrind
+            \pnote{Erkennt Speicherlecks, undefiniertes Verhalten, Langsam}
+            \pause
+        \item LibAdressSanitizer (Asan)
+            \pnote{Wie Valgrind nur schnell und neuer}
+            \pause
+        \item clang-tidy
+            \pnote{Statische Analyse, Fehler vor der Compilieren entdecken, Demo in CLion}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \Huge{Beispiel: Tools}
+    \pnote{Segfault bauen, GDB nutzen Valgrind und Asan nutzen in CLion}
+\end{frame}
+
+\section{Abschluss}
+
+\begin{frame}
+    \frametitle{Mehr Informationen}
+    \begin{itemize}
+        \item en.cppreference.com
+            \pnote{Dokumentation der Sprache und STL, deutsche Version ist Shit}
+            \pause
+        \item github.com/isocpp/CppCoreGuidelines
+            \pnote{Gut für Designentscheidungen}
+            \pause
+        \item godbolt.org
+            \pnote{Was erzeugt der Compiler für Code auf unterschiedlichen Plattformen, eher als Spielzeug}
+            \pause
+        \item github.com/SoPra-Team-10/CppCMakeIntro
+            \pnote{Dieser Vortrag}
     \end{itemize}
 \end{frame}
 
