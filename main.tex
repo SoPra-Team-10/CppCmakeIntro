@@ -3,9 +3,30 @@
 \usepackage[utf8]{inputenc}
 \usepackage{soul}
 \usepackage{pdfpcnotes}
+\usepackage{listings}
 
 \usetheme{Hannover}
 \usecolortheme{dove}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+
 
 \title{C++, CMake und GTest}
 \author{Paul Nykiel}
@@ -13,7 +34,9 @@
 
 \begin{document}
 \maketitle
-\frame{\tableofcontents[currentsection]}
+\frame{
+    \tableofcontents
+}
 
 \section{Einleitung}
 \begin{frame}
@@ -54,7 +77,7 @@
     \end{itemize}
 \end{frame}
 
-\section{Getting Started}
+\section{Ein erstes C++ Programm}
 
 \begin{frame}
     \frametitle{Beispiel: Hello World}
@@ -65,7 +88,7 @@
     \frametitle{Vom Sourcecode zur ausführbaren Datei}
     \begin{itemize}
         \item Präprozessor 
-            \pnote{Erklärung include und define an Hello World Bsp (gcc -E)}
+            \pnote{Erklärung include und define an Hello World Bsp (gcc -E), einfache Textersetzung}
             \pause
         \item C++-Compiler 
             \pnote{Übersetzten von der Übersetzungseinheit in Maschinencode}
@@ -116,6 +139,8 @@
 \begin{frame}
     \frametitle{Copy}
     \begin{itemize}
+        \item \lstinline{std::vector<int> a = b;}
+            \pause
         \item Alles wird immer kopiert 
             \pnote{Funktionsargumente, Zuweisung.... Explizit große Container erwähnen}
             \pause
@@ -144,6 +169,9 @@
             \pause
         \item Gehört nicht in die Anwendungslogik
             \pnote{Permanente Fehlerquelle, Zeitverschwendung}
+            \pause
+        \item
+            \lstinline{int b = 17; int *a = &b;}
     \end{itemize}
 \end{frame}
 
@@ -159,11 +187,16 @@
         \item Genau ein Owner
             \pnote{Explizit verboten zu kopieren (=delete), Bsp. kopieren in Klasse, jetzt uneindeutiger Owner}
             \pause
+        \item
+            \lstinline{std::unique\_ptr<int> a = std::make\_unique(17);}
+            \pause
         \item shared\_ptr 
             \pnote{Zusätzlich Zählen von Instanzen (siehe Copy-Constructor)}
             \pause
         \item Quasi immer nutzbar
             \pnote{Etwas weniger performant}
+        \item
+            \lstinline{std::shared\_ptr<int> a = std::make\_shared(17);}
     \end{itemize}
 \end{frame}
 
@@ -178,6 +211,8 @@
             \pause
         \item Können aber ungültig werden
             \pnote{z.B. lokale Variablen}
+        \item
+            \lstinline{int b = 17; int &a = b;}
     \end{itemize}
 \end{frame}
 
@@ -199,7 +234,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Beispiel Referenzen}
+    \frametitle{Beispiel: Referenzen}
     \pnote{Frage welche Sorte Pointer. HelloWorld Lib Ergänzen mit Referenzen, jetzt in CLIon}
 \end{frame}
 
@@ -223,6 +258,11 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Beispiel: Const-Correctness}
+    \pnote{const einfügen}
+\end{frame}
+
+\begin{frame}
     \frametitle{RAII}
     \begin{itemize}
         \item Resource acquisition is initialization
@@ -232,6 +272,36 @@
             Destruktor frei
             \pnote{Bsp. Datei, Mutex, Vector. Vgl try catch finally java}
             \pause
+        \item
+            \lstinputlisting{examples/raii.cpp}
+            \pnote{Trailing return type, Const-Correctness, Objekte werden im Konstruktor initialisiert, alle Objekte werden im Konstruktor geschlossen} 
+    \end{itemize}
+\end{frame}
+
+\section{OOP in C++}
+
+\begin{frame}
+    \frametitle{Klassendeklaration}
+    \lstinputlisting{examples/class.h}
+    \pnote{Vererbung, Sichtbarkeit von Vererbung, public, private, Konstruktor, Trailing return type, const Const-Correctness}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Klassendefinition}
+    \lstinputlisting{examples/class.cpp}
+    \pnote{Initializierung in Braced-Initializer, Super-Konstruktor, this als Pointer}
+\end{frame}
+
+\section{STL}
+
+\begin{frame}
+    \frametitle{STL}
+    \begin{itemize}
+        \item Standard Template Library
+        \item String, Math, Date \& Time
+        \item Container
+        \item IO
+        \item Concurrency
     \end{itemize}
 \end{frame}
 
