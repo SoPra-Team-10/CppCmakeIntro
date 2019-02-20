@@ -10,9 +10,6 @@
  * Buttons o.ä. nicht so geil
  
 ## Theorie
-### Pattern und anderes: Const correctness, RAII
- * Resource aquisition is initialization
- * Bsp. datei (vgl. Java, try, catch, finally)
 ### Container
  * Nutzt Templates für Generics
  * vector: vermutlich häufigster Container (O(1) zugriff, push_back i.A. teuer)

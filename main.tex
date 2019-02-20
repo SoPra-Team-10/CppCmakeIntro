@@ -4,7 +4,7 @@
 \usepackage{soul}
 \usepackage{pdfpcnotes}
 
-\usetheme{default}
+\usetheme{Hannover}
 \usecolortheme{dove}
 
 \title{C++, CMake und GTest}
@@ -29,20 +29,27 @@
     \frametitle{C++ im Vergleich zu Java, C\#}
     \begin{itemize}
         \item Undefiniertes Verhalten 
-            \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht kontrolliert werden z.B. Microcontroller}
+            \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht vom Compiler kontrolliert werden und zur Runtime gibt es keine passnden Mechanismen  z.B. Microcontroller}
+            \pause
         \item Keine automatische Speicherverwaltung 
             \pnote{Performanter Code! Systemnah! Wenn benötigt liefert die STL passende Container, nicht der Compiler}
+            \pause
         \item Kleiner Sprachkern 
             \pnote{60 Schlüsselwörter, C\# z.B. 86. Keine UI, kein Networking...}
+            \pause
         \item Templates 
             \pnote{Nicht generics, viel mächtiger, z.B. Boost MSM, sichere Pointer (Guideline support library)}
+            \pause
         \item Operatorenüberladung
             \pnote{Bsp. Vektor}
+            \pause
         \item Tendentiell weniger tiefe Vererbung
             \pnote{Z.b. Container und Iteratoren, keine Überklasse aber Eigenschaften (forward-Iterator), dadurch weniger Boilerplate}
+            \pause
         \item Mehrfachvererbung
             \pnote{Dadurch keine Interfaces notwendig}
-        \item Klar definierte Objektlebenszeit
+            \pause
+        \item Definierte Objektlebenszeit
             \pnote{Konstruktor, Destruktor, Scope}
     \end{itemize}
 \end{frame}
@@ -50,8 +57,8 @@
 \section{Getting Started}
 
 \begin{frame}
-    \frametitle{Ein erstes Beispiel}
-    \pnote{Hello World, erklärung: Include, keine main-Klasse, namespaces, operatorenüberladung}
+    \frametitle{Beispiel: Hello World}
+    \pnote{Hello World. Erklärung: include, keine main-Klasse, namespaces, Operatorenüberladung}
 \end{frame}
 
 \begin{frame}
@@ -59,21 +66,25 @@
     \begin{itemize}
         \item Präprozessor 
             \pnote{Erklärung include und define an Hello World Bsp (gcc -E)}
+            \pause
         \item C++-Compiler 
             \pnote{Übersetzten von der Übersetzungseinheit in Maschinencode}
+            \pause
         \item Linker 
-            \pnote{Baut fertigen Code zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
+            \pnote{Baut Programm zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
+            \pause
         \item includes sichern Typkonsitenz
             \pnote{Unterschied Definition und Deklaration, Doku im Header gut für Übersicht}
+            \pause
         \item Templates müssen im Header definiert werden
             \pnote{Compiler muss alle instanziierungen kennen, langsamer Buildprozess}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Beispiel Bibliothek}
+    \frametitle{Beispiel: Eine zweite Übersetzungseinheit}
     \pnote{Zweites Cpp File, alles einfach in g++ schmeißen,
-    Message als std::string (nicht ref oder so)}
+    Message als std::string (nicht ref)}
 \end{frame}
 
 \section{CMake}
@@ -83,8 +94,10 @@
     \begin{itemize}
         \item Nur geänderte Übersetzungseinheiten neu kompilieren 
             \pnote{erkennt welche Files geändert wurde}
+            \pause
         \item Einzelner Befehl an Compiler wird zu kompliziert
             \pnote{Vor allem bei vielen Flags}
+            \pause
         \item Portabilität
             \pnote{GCC wird nie explizit genannt, es wird nur ein Compiler auf Basis von Env-Variablen gesucht Flags Portabel z.B. Version}
     \end{itemize}
@@ -101,13 +114,15 @@
 \section{Mehr C++}
 
 \begin{frame}
-    \frametitle{Copy und Move}
+    \frametitle{Copy}
     \begin{itemize}
         \item Alles wird immer kopiert 
-            \pnote{Funktionsargumente zuweisung...}
+            \pnote{Funktionsargumente, Zuweisung.... Explizit große Container erwähnen}
+            \pause
         \item Simpel 
             \pnote{Vgl. komisches Java Verhalten}
-        \item Performance 
+            \pause
+        \item Performance nicht gut
             \pnote{Aber Performance sehr wichtig in C++}
     \end{itemize}
 \end{frame}
@@ -117,11 +132,16 @@
     \begin{itemize}
         \item Pointer 
             \pnote{Vererbt von C}
+            \pause
         \item Angst!
+            \pause
         \item Gefährlich!
+            \pause
         \item Böse!
+            \pause
         \item Nicht schlimm aber viel Potential sachen kaputt zu machen
             \pnote{Leaks, Owner, selbst Borchert macht Fehler bei malloc in Klausur}
+            \pause
         \item Gehört nicht in die Anwendungslogik
             \pnote{Permanente Fehlerquelle, Zeitverschwendung}
     \end{itemize}
@@ -132,12 +152,16 @@
     \begin{itemize}
         \item Funktionen aus der Standardlibrary
             \pnote{Erwähnung Operatorenüberladung und Lifetime}
+            \pause
         \item unique\_ptr 
             \pnote{Quasi Drop-In-Replacement für Raw-Ptr, machen selber den Speicher am Ende der Lebenszeit Frei}
+            \pause
         \item Genau ein Owner
             \pnote{Explizit verboten zu kopieren (=delete), Bsp. kopieren in Klasse, jetzt uneindeutiger Owner}
+            \pause
         \item shared\_ptr 
             \pnote{Zusätzlich Zählen von Instanzen (siehe Copy-Constructor)}
+            \pause
         \item Quasi immer nutzbar
             \pnote{Etwas weniger performant}
     \end{itemize}
@@ -147,8 +171,13 @@
     \frametitle{Referenzen}
     \begin{itemize}
         \item Sprachfeature kein Library-Feature
+            \pnote{Werden vom Compiler zu Pointern gemacht}
+            \pause
         \item Können nicht null sein
+            \pnote{Zeigen immer auf anderes Objekt, eine Art Alias}
+            \pause
         \item Können aber ungültig werden
+            \pnote{z.B. lokale Variablen}
     \end{itemize}
 \end{frame}
 
@@ -157,10 +186,13 @@
     \begin{itemize}
         \item Raw-Pointer: Wird quasi nie verwendet
             \pnote{Ausser pre C++11 und mit C APIs}
+            \pause
         \item Unique-Pointer: Ersatz für Raw-Pointer
             \pnote{Limitierung: Ein Owner}
+            \pause
         \item Shared-Pointer: Sichere Pointer für beliebig viele Ownerr
             \pnote{Am Ähnlichsten zu Java}
+            \pause
         \item Referenzen: Oftmals um Kopien zu vermeiden
             \pnote{Sprachfeature}
     \end{itemize}
@@ -178,12 +210,28 @@
     \begin{itemize}
         \item Alles per Referenz: Super Effizient aber Fehlerquelle
             \pnote{Beispiel: ausversehen einfügen in Map}
+            \pause
         \item Const-Referenzen
             \pnote{Ergänze Beispiel}
+            \pause
         \item Const-Memberfunktionen
             \pnote{Beispiel getter}
+            \pause
         \item Mutable
             \pnote{Beispiel Mutex, nicht immer!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{RAII}
+    \begin{itemize}
+        \item Resource acquisition is initialization
+            \pnote{Fehlerreduktion, Einfachheit}
+            \pause
+        \item Objekt akquiriert Resourcen im Konstruktor und gibt sie im
+            Destruktor frei
+            \pnote{Bsp. Datei, Mutex, Vector. Vgl try catch finally java}
+            \pause
     \end{itemize}
 \end{frame}
 
