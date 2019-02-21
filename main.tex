@@ -57,7 +57,7 @@
     \frametitle{C++ im Vergleich zu Java, C\#}
     \begin{itemize}
         \item Undefiniertes Verhalten 
-            \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht vom Compiler kontrolliert werden und zur Runtime gibt es keine passnden Mechanismen  z.B. Microcontroller}
+            \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht vom Compiler kontrolliert werden und zur Runtime gibt es keine passnden Mechanismen  z.B. Microcontroller. Aber auch Race-Conditions vgl. Java}
             \pause
         \item Keine automatische Speicherverwaltung 
             \pnote{Performanter Code! Systemnah! Wenn benötigt liefert die STL passende Container, nicht der Compiler}
@@ -278,7 +278,7 @@
             \pnote{Bsp. Datei, Mutex, Vector. Vgl try catch finally java}
             \pause
         \item
-            \lstinputlisting{examples/raii.cpp}
+            \lstinputlisting{examples/slides/raii.cpp}
             \pnote{Trailing return type, Const-Correctness, Objekte werden im Konstruktor initialisiert, alle Objekte werden im Konstruktor geschlossen} 
     \end{itemize}
 \end{frame}
@@ -287,13 +287,13 @@
 
 \begin{frame}
     \frametitle{Klassendeklaration}
-    \lstinputlisting{examples/class.h}
+    \lstinputlisting{examples/slides/class.h}
     \pnote{Vererbung, Sichtbarkeit von Vererbung, public, private, Konstruktor, Trailing return type, const Const-Correctness}
 \end{frame}
 
 \begin{frame}
     \frametitle{Klassendefinition}
-    \lstinputlisting{examples/class.cpp}
+    \lstinputlisting{examples/slides/class.cpp}
     \pnote{Initializierung in Braced-Initializer, Super-Konstruktor, this als Pointer}
 \end{frame}
 
@@ -304,19 +304,19 @@
 \section{Noch mehr C++}
 \begin{frame}
     \frametitle{Type-Deduction}
-    \lstinputlisting{examples/typededuction.cpp}
+    \lstinputlisting{examples/slides/typededuction.cpp}
     \pnote{Typ wird hergeleitet, oftmals Praktisch (vgl. Iterator), spart redundanz. Potentielle Fehlerquelle, z.B. Proxy klasse (vgl. std::vector<bool>)}
 \end{frame}
 
 \begin{frame}
     \frametitle{Lambda-Ausdrücke und Funktionen}
-    \lstinputlisting{examples/lambda.cpp}
+    \lstinputlisting{examples/slides/lambda.cpp}
     \pnote{Lambda, capute group, argumente. Bind um Argumente fest zu binden (oder Reihenfolge ändern)}
 \end{frame}
 
 \begin{frame}
     \frametitle{Kurzeinführung Templates}
-    \lstinputlisting{examples/template.cpp}
+    \lstinputlisting{examples/slides/template.cpp}
     \pnote{Definition von template mit Typen, Type Deduktion}
 \end{frame}
 
@@ -403,7 +403,7 @@
 
 \begin{frame}
     \frametitle{Iteratoren}
-    \lstinputlisting{examples/iterator.cpp}
+    \lstinputlisting{examples/slides/iterator.cpp}
     \pnote{Type deduction wäre möglich. Wie Pointer nur abstrakt, z.B. auch bei Liste, zentrales Element für Container und Algorithmen}
 \end{frame}
 
@@ -445,7 +445,7 @@
         \item \lstinline{std::launch} und \lstinline{std::future<T>}
             \pnote{Abstraktion, asynchroner Funktionsaufruf, ergebniss in Future}
             \pause
-        \item \lstinline{std::mutex} und \lstinline{std::lock<T>}
+        \item \lstinline{std::mutex} und \lstinline{std::lock\_guard<T>}
             \pnote{Gegenseitiger Ausschluss, Lock sperrt und entsperrt automatisch (RAII!)}
     \end{itemize}
 \end{frame}
@@ -455,13 +455,13 @@
 \section{Tools}
 \begin{frame}
     \frametitle{GTest}
-    \lstinputlisting{examples/gtest.cpp}
+    \lstinputlisting{examples/slides/gtest.cpp}
     \pnote{Diverseste Bedinungen, z.B. auch Float, integration in CLion}
 \end{frame}
 
 \begin{frame}
     \frametitle{Doxygen}
-    \lstinputlisting{examples/doxygen.cpp}
+    \lstinputlisting{examples/slides/doxygen.cpp}
     \pnote{Vergleiche JavaDoc, besonderheit: tparam}
 \end{frame}
 
