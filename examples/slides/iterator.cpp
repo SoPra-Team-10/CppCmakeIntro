@@ -3,5 +3,5 @@ int b = 0;
 
 for (std::vector<int>::iterator it = a.begin();
         it != a.end(); a++) {
-    b += *a;
+    b += *i;
 }

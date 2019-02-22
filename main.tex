@@ -28,7 +28,7 @@
 }
 
 
-\title{C++, CMake und GTest}
+\title{Eine Einführung in modernes C++ mit CMake}
 \author{Paul Nykiel}
 \date{\today}
 
@@ -43,13 +43,16 @@
     \frametitle{Was ist C++}
     \begin{itemize}
         \item \st{C with classes}
-            \pnote{Ursprünglicher Name}
+            \pnote{Ursprünglicher Name, da initial nur Erweiterung von C um Objektorientung}
             \pause
         \item C++11!
-            \pnote{Neuer Standard inzwischen 17 bald 20}
+            \pnote{Inzwischen weiter von C entfernt, mehr Konstrukte um sicheren und effizienten Code zu schreiben (Verweis Titel). Neuer Standard inzwischen 17 bald 20}
             \pause
         \item Standardisiert und offen
-            \pnote{Viele Compiler}
+            \pnote{Viele Compiler, Gute Dokumentation,  Entscheidungen werden im Komitee getroffen, nicht von einzelnen Firmen}
+            \pause
+        \item Wird in quasi jeder Domäne genutzt
+            \pnote{Embedded, Betriebssysteme, Systemnahe Entwicklung, Desktop-Anwendungen, Server-Anwendungen, HPC...}
     \end{itemize}
 \end{frame}
 
@@ -57,16 +60,16 @@
     \frametitle{C++ im Vergleich zu Java, C\#}
     \begin{itemize}
         \item Undefiniertes Verhalten 
-            \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht vom Compiler kontrolliert werden und zur Runtime gibt es keine passnden Mechanismen  z.B. Microcontroller. Aber auch Race-Conditions vgl. Java}
+            \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht vom Compiler kontrolliert werden und zur Runtime gibt es keine passnden Mechanismen  z.B. Microcontroller. Aber quasi jede Sprache hat undefiniertes Verhalten bezeichnet es aber nicht so (z.B. Race-Conditions)}
             \pause
         \item Keine automatische Speicherverwaltung 
-            \pnote{Performanter Code! Systemnah! Wenn benötigt liefert die STL passende Container, nicht der Compiler}
+            \pnote{Keine Aufgabe der Sprache, wenn benötigt liefert die STL passende Container. Bei Microcontroller oder Echtzeitanwendungen nicht gewünscht}
             \pause
-        \item Kleiner Sprachkern 
+        \item Kleiner Sprachkern und kleine Standardlibrary 
             \pnote{60 Schlüsselwörter, C\# z.B. 86. Keine UI, kein Networking...}
             \pause
         \item Templates 
-            \pnote{Nicht generics, viel mächtiger, z.B. Boost MSM, sichere Pointer (Guideline support library)}
+            \pnote{Nicht generics, viel mächtiger, z.B. Boost MSM, sichere Pointer (Guideline support library), Turing-vollständig}
             \pause
         \item Operatorenüberladung
             \pnote{Bsp. Vektor}
@@ -86,17 +89,17 @@
 
 \begin{frame}
     \Huge{Beispiel: Hello World}
-    \pnote{Hello World. Erklärung: include, keine main-Klasse, namespaces, Operatorenüberladung}
+    \pnote{Hello World. Erklärung: include, keine main-Klasse, namespaces, Operatorenüberladung, Vergleich Code-Länge mit Java}
 \end{frame}
 
 \begin{frame}
     \frametitle{Vom Sourcecode zur ausführbaren Datei}
     \begin{itemize}
         \item Präprozessor 
-            \pnote{Erklärung include und define an Hello World Bsp (gcc -E), einfache Textersetzung}
+            \pnote{Erklärung include und define an Hello World Bsp (gcc -E), einfache Textersetzung, Erklärung an Tafel}
             \pause
         \item C++-Compiler 
-            \pnote{Übersetzten von der Übersetzungseinheit in Maschinencode}
+            \pnote{Übersetzten von der Übersetzungseinheit in Maschinencode, Übersetzungseinheit definieren}
             \pause
         \item Linker 
             \pnote{Baut Programm zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
@@ -120,40 +123,38 @@
 \begin{frame}
     \frametitle{Warum CMake}
     \begin{itemize}
-        \item Nur geänderte Übersetzungseinheiten neu kompilieren 
-            \pnote{erkennt welche Files geändert wurde}
+        \item Nur geänderte Dateien neu kompilieren 
+            \pnote{erkennt welche Files geändert wurde, größere Projekte kompilieren sonst jedes mal mehrere Minuten bis Stunden}
             \pause
         \item Einzelner Befehl an Compiler wird zu kompliziert
-            \pnote{Vor allem bei vielen Flags}
+            \pnote{Vor allem bei vielen Flags und vielen Dateien}
             \pause
         \item Portabilität
-            \pnote{GCC wird nie explizit genannt, es wird nur ein Compiler auf Basis von Env-Variablen gesucht Flags Portabel z.B. Version}
+            \pnote{Compiler und Flags werden unnabhängig vom Os und von installierten Compilern angegeben}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \Huge{Beispiel: CMake}
-    \pnote{Einfaches CMake File dazu bauen}
-    %TODO wie muss das aussehen?
+    \pnote{Einfaches CMake File dazu bauen, nochmal kompilieren, Lib ändern zeigen dass main nicht neu gebaut wird}
 \end{frame}
-
-%TODO Hier eventuell SFML
 
 \section{Mehr C++}
 
 \begin{frame}
-    \frametitle{Copy}
+    \frametitle{Speicherverwaltung}
     \begin{itemize}
-        \item \lstinline{std::vector<int> a = b;}
+        \item \lstinputlisting{examples/slides/copy.cpp}
+            \pnote{f ist Funktion list->list und b ist list. Was passiert hier, wie viele Objekte existieren, wie viel Speicher wird genutzt, wie oft wird kopiert}
             \pause
-        \item Alles wird immer kopiert 
+        \item Jegliche Zuweisung ist eine Kopie, auch für Funktionsargumente
             \pnote{Funktionsargumente, Zuweisung.... Explizit große Container erwähnen}
             \pause
-        \item Simpel 
-            \pnote{Vgl. komisches Java Verhalten}
+        \item Einfach verständlich
+            \pnote{Vgl. komisches Java Verhalten. Trivial ein Objekt zu kopieren, deep copy in Java und C\# schwierig (Internet: selber implementieren oder serializieren und deserializieren)}
             \pause
-        \item Performance nicht gut
-            \pnote{Aber Performance sehr wichtig in C++}
+        \item Für große Objekte unnötige Performanceeinbuße
+            \pnote{Spricht gegen das was ich in Einleitung gesagt habe, Performance in C++ wichtig}
     \end{itemize}
 \end{frame}
 
@@ -161,22 +162,28 @@
     \frametitle{Pointer}
     \begin{itemize}
         \item Pointer 
-            \pnote{Vererbt von C}
+            \pnote{"Vererbt" von C}
             \pause
         \item Angst!
             \pause
         \item Gefährlich!
             \pause
         \item Böse!
+            \pnote{Pointer kurz erklären, kurz Owner (malloc/new) bzw. nur als Referenz erklären}
             \pause
         \item Nicht schlimm aber viel Fehlerpotential
-            \pnote{Leaks, Owner, selbst Borchert macht Fehler bei malloc in Klausur}
+            \pnote{Leaks, Owner nicht definiert, vor allem bei Librarys relevant}
+        \item \lstinline{int b = 17; int *a = &b;}
+            \pnote{Pointer als Referenz}
+            \pause
+        \item \lstinline{int c = new int();}
+            \pnote{Pointer als Owner, Hier gleich ein potentieller Leak}
+            \pause
+        \item \lstinline{delete c;}
+            \pnote{Immer mit delete, das will doch wirklich keiner}
             \pause
         \item Gehört nicht in die Anwendungslogik
-            \pnote{Permanente Fehlerquelle, Zeitverschwendung}
-            \pause
-        \item
-            \lstinline{int b = 17; int *a = &b;}
+            \pnote{Permanente Fehlerquelle, Zeitverschwendung, Ab jetzt als Raw-Pointer bezeichnet und die wieder verwenden!}
     \end{itemize}
 \end{frame}
 
@@ -190,7 +197,7 @@
             \pnote{Quasi Drop-In-Replacement für Raw-Ptr, machen selber den Speicher am Ende der Lebenszeit Frei}
             \pause
         \item Genau ein Owner
-            \pnote{Explizit verboten zu kopieren (=delete), Bsp. kopieren in Klasse, jetzt uneindeutiger Owner}
+            \pnote{Explizit verboten zu kopieren (=delete), Bsp. kopieren in Klasse, jetzt uneindeutiger Owner. Oftmals für Factory Methoden, kein Overhead zu Raw-Pointer}
             \pause
         \item
             \lstinline{std::unique\_ptr<int> a = std::make\_unique(17);}
@@ -199,7 +206,7 @@
             \pnote{Zusätzlich Zählen von Instanzen (siehe Copy-Constructor)}
             \pause
         \item Quasi immer nutzbar
-            \pnote{Etwas weniger performant}
+            \pnote{Dafür kopieren... minimal langsamer}
         \item
             \lstinline{std::shared\_ptr<int> a = std::make\_shared(17);}
     \end{itemize}
@@ -209,7 +216,7 @@
     \frametitle{Referenzen}
     \begin{itemize}
         \item Sprachfeature kein Library-Feature
-            \pnote{Werden vom Compiler zu Pointern gemacht}
+            \pnote{Werden vom Compiler zu Pointern gemacht, nie Owner. Hier betrachtet L-Value-Referenzen}
             \pause
         \item Können nicht null sein
             \pnote{Zeigen immer auf anderes Objekt, eine Art Alias}
@@ -228,10 +235,10 @@
             \pnote{Ausser pre C++11 und mit C APIs}
             \pause
         \item Unique-Pointer: Ersatz für Raw-Pointer
-            \pnote{Limitierung: Ein Owner}
+            \pnote{Limitierung: Ein Owner dafür Performant}
             \pause
         \item Shared-Pointer: Sichere Pointer für beliebig viele Ownerr
-            \pnote{Am Ähnlichsten zu Java}
+            \pnote{Am Ähnlichsten zu Java, aber etwas Overhead (immer noch weniger als Java)}
             \pause
         \item Referenzen: Oftmals um Kopien zu vermeiden
             \pnote{Sprachfeature}
@@ -240,7 +247,7 @@
 
 \begin{frame}
     \Huge{Beispiel: Referenzen}
-    \pnote{Frage welche Sorte Pointer. HelloWorld Lib Ergänzen mit Referenzen, jetzt in CLIon}
+    \pnote{Frage welche Sorte Pointer. HelloWorld Lib Ergänzen mit Referenzen, jetzt in CLion}
 \end{frame}
 
 \section{Design Pattern}
@@ -249,22 +256,28 @@
     \frametitle{Const-Correctness}
     \begin{itemize}
         \item Alles per Referenz: Super Effizient aber Fehlerquelle
-            \pnote{Beispiel: ausversehen einfügen in Map}
+            \pnote{Beispiel: ausversehen einfügen in Map, allgemeine Fehlerquelle immer nur minimale Rechte}
             \pause
         \item Const-Referenzen
             \pnote{Ergänze Beispiel}
             \pause
+        \item \lstinline{const int &a = b;}
+            \pnote{Read-Only "nur anschauen"}
+            \pause
         \item Const-Memberfunktionen
             \pnote{Beispiel getter}
             \pause
+        \item \lstinline{int getX() const \{...}
+            \pnote{Const am ende der Definition this ist in der Funktion konstant}
+            \pause
         \item Mutable
-            \pnote{Beispiel Mutex, nicht immer!}
+            \pnote{Beispiel Mutex, Caching, nicht immer!}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \Huge{Beispiel: Const-Correctness}
-    \pnote{const einfügen}
+    \pnote{const einfügen hello world}
 \end{frame}
 
 \begin{frame}
@@ -288,7 +301,7 @@
 \begin{frame}
     \frametitle{Klassendeklaration}
     \lstinputlisting{examples/slides/class.h}
-    \pnote{Vererbung, Sichtbarkeit von Vererbung, public, private, Konstruktor, Trailing return type, const Const-Correctness}
+    \pnote{Hinweis unterschied Deklaration und Definition. Vererbung, Sichtbarkeit von Vererbung, public, private, Konstruktor, Trailing return type, const Const-Correctness}
 \end{frame}
 
 \begin{frame}
@@ -302,6 +315,21 @@
 \end{frame}
 
 \section{Noch mehr C++}
+
+\begin{frame}
+    \frametitle{Casts und Null-Pointer}
+    \begin{itemize}
+        \item \lstinline{static\_cast<T>(a)}
+            \pnote{Castet Typen in kompatible Typen (hier von a nach T), kompatibilität wird zur Compile Time gecheckt}
+            \pause
+        \item \lstinline{dynamic\_cast<T>(a)}
+            \pnote{Castet zur Runtime, vor allem für Pointer und Polyphormismus, kann Null sein}
+            \pause
+        \item \lstinline{0}, \lstinline{NULL} und \lstinline{nullptr}
+            \pnote{Abstammung aus C, Erklärung mit Überladung}
+    \end{itemize}
+\end{frame}
+
 \begin{frame}
     \frametitle{Type-Deduction}
     \lstinputlisting{examples/slides/typededuction.cpp}
@@ -315,7 +343,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Kurzeinführung Templates}
+    \frametitle{Kurzeinführung Templates als Generics}
     \lstinputlisting{examples/slides/template.cpp}
     \pnote{Definition von template mit Typen, Type Deduktion}
 \end{frame}
@@ -404,7 +432,13 @@
 \begin{frame}
     \frametitle{Iteratoren}
     \lstinputlisting{examples/slides/iterator.cpp}
-    \pnote{Type deduction wäre möglich. Wie Pointer nur abstrakt, z.B. auch bei Liste, zentrales Element für Container und Algorithmen}
+    \pnote{Type deduction wäre möglich (auto). Wie Pointer nur abstrakt, z.B. auch bei Liste, zentrales Element für Container und Algorithmen}
+\end{frame}
+
+\begin{frame}
+    \frametitle{for-each}
+    \lstinputlisting{examples/slides/foreach.cpp}
+    \pnote{Deutlich kürzer, sicher beachte const Referenz, nur wenn Funktionen const}
 \end{frame}
 
 \begin{frame}
@@ -443,14 +477,17 @@
             \pnote{Startet neuen Thread aus callable}
             \pause
         \item \lstinline{std::launch} und \lstinline{std::future<T>}
-            \pnote{Abstraktion, asynchroner Funktionsaufruf, ergebniss in Future}
+            \pnote{Abstraktion, asynchroner Funktionsaufruf. Ergebnis in std::future}
             \pause
         \item \lstinline{std::mutex} und \lstinline{std::lock\_guard<T>}
-            \pnote{Gegenseitiger Ausschluss, Lock sperrt und entsperrt automatisch (RAII!)}
+            \pnote{Gegenseitiger Ausschluss. lock_guard sperrt und entsperrt automatisch (RAII!)}
+        \item \lstinline{std::atomic<T>}
+            \pnote{Effiziente und kompakte Lösung für einzelne Variablen, auf denen Operationen Atomar sein sollen}
     \end{itemize}
 \end{frame}
 
 \section{Praxis}
+%TODO TicTacToe?
 
 \section{Tools}
 \begin{frame}
@@ -462,32 +499,46 @@
 \begin{frame}
     \frametitle{Doxygen}
     \lstinputlisting{examples/slides/doxygen.cpp}
-    \pnote{Vergleiche JavaDoc, besonderheit: tparam}
+    \pnote{Vergleiche JavaDoc, besonderheit: tparam. Beispiel Generiertes HTML}
 \end{frame}
 
 \begin{frame}
     \frametitle{Debugging und Fehlersuche}
     \begin{itemize}
-        \item GDB o.ä.
-            \pnote{Debugger, quasi beliebig, wichtigestes Tool}
+        \item Debugger
+            \pnote{z.B. GDB, quasi beliebig, wichtigestes Tool}
             \pause
         \item Valgrind
-            \pnote{Erkennt Speicherlecks, undefiniertes Verhalten, Langsam}
+            \pnote{Erkennt Speicherlecks, undefiniertes Verhalten, aber Langsam}
             \pause
         \item LibAdressSanitizer (Asan)
             \pnote{Wie Valgrind nur schnell und neuer}
             \pause
         \item clang-tidy
-            \pnote{Statische Analyse, Fehler vor der Compilieren entdecken, Demo in CLion}
+            \pnote{Statische Analyse, Fehler vor der Compilieren entdecken}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \Huge{Beispiel: Tools}
-    \pnote{Segfault bauen, GDB nutzen Valgrind und Asan nutzen in CLion}
+    \pnote{Segfault bauen, GDB nutzen Valgrind und Asan nutzen in CLion, z.B. Referenz auf Vector und dann push\_back}
 \end{frame}
 
 \section{Abschluss}
+
+\begin{frame}
+    \frametitle{Was fehlt?}
+    \begin{itemize}
+        \item R-Value Refernenzen, forward/universal Referenzen
+            \pnote{Neue Form von Referenz, primär benötigt wenn Speicherverwaltung}
+            \pause
+        \item Move
+            \pnote{Speicher von einer Klasse an eine andere Übergeben, z.B. return, per default da, sonst wenn Speicherverwaltung}
+            \pause
+        \item Meta-Programming
+            \pnote{Touring-vollständige Sprache zur CompileTime, type\_traits}
+    \end{itemize}
+\end{frame}
 
 \begin{frame}
     \frametitle{Mehr Informationen}
@@ -503,6 +554,8 @@
             \pause
         \item github.com/SoPra-Team-10/CppCMakeIntro
             \pnote{Dieser Vortrag}
+        \item Scott Meyers: Effective Modern C++
+            \pnote{Gutes Buch, deutliche Vertiefung}
     \end{itemize}
 \end{frame}
 
