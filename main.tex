@@ -348,6 +348,47 @@
     \pnote{Definition von template mit Typen, Type Deduktion}
 \end{frame}
 
+\section{Praxis: Einrichten der Entwicklungsumgebung}
+
+\begin{frame}
+    \frametitle{Linux (Ubuntu basiert)}
+    \lstinline[language=bash]{sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test}
+
+    \lstinline[language=bash]{sudo apt install -y gcc-8 g++-8 make cmake build-essential}
+
+    \lstinline[language=bash]{update-alternatives --config gcc}
+
+    \vspace{1cm}
+
+    \lstinline[language=bash]{sudo snap install clion --classic}
+    \pnote{Bisschen hässlich weil GCC 8 nicht in den Paketquellen}
+\end{frame}
+
+\begin{frame}
+    \frametitle{macOs}
+    \lstinline[language=bash]{xcode-select --install}
+
+    \vspace{1cm}
+
+    CLion runterladen und installieren: 
+    
+    \url{https://www.jetbrains.com/clion/download/\#section=mac}
+
+    \vspace{1cm}
+
+    Siehe Anleitung: 
+    
+    \url{https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-macos.html}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Windows}
+
+    Anleitung befolgen und hoffen: 
+    
+    \url{https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-windows.html}
+\end{frame}
+
 \section{STL}
 
 \begin{frame}
