@@ -473,7 +473,8 @@
 \begin{frame}
     \frametitle{Iteratoren}
     \lstinputlisting{examples/slides/iterator.cpp}
-    \pnote{Type deduction wäre möglich (auto). Wie Pointer nur abstrakt, z.B. auch bei Liste, zentrales Element für Container und Algorithmen}
+    \pnote{Type deduction wäre möglich (auto). Wie Pointer nur abstrakt, z.B. auch bei Liste, zentrales Element für Container und Algorithmen,
+    abstraktion von Container, wieso nicht at O(n) in Liste}
 \end{frame}
 
 \begin{frame}
@@ -529,7 +530,40 @@
 
 \section{Praxis}
 \begin{frame}
-    \Huge{Praxis: TicTacToe}
+    \Huge{Praxis: \pause Huffman-Codierer}
+    \pnote{Begründung: Baum nicht als STL-Datenstrukur, trotzdem STL Container notwendig, Templates, Pointer, in 100 Zeilen lösbar}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Vorgehen}
+    \begin{itemize}
+        \item Datei einlesen
+            \pnote{Streams nutzen}
+            \pause
+        \item Relative Häufigkeiten ($\approx$ Wahrscheinlichkeiten) berechnen (Byteweise)
+            \pnote{Blockgröße 8-bit}
+            \pause
+        \item Huffman-Baum konstruieren
+            \pnote{Erstmal separate Template-Klasse für Baum, dann nutzen für Huffman}
+            \begin{itemize}
+                \item Menge aller Symbole mit zugehörigen Wahrscheinlichkeiten
+                    \pnote{Nach passender Datenstruktur für Menge und Symbol mit Wahrscheinlichkeit fragen}
+                    \pause
+                \item Zwei Symbole geringster Wahrscheinlichkeit finden
+                    \pnote{Effizienz, jedes mal suchen, ein mal sortieren?}
+                    \pause
+                \item Symbole aus Menge Entfernen
+                    \pnote{Recherche wie in STL möglich}
+                    \pause
+                \item Zu neuem Knoten kombinieren
+                    \pause
+                \item Knoten zu Menge hinzufügen
+                    \pause
+            \end{itemize}
+        \item Abbildung ausgeben
+            \pnote{Durch Baum laufen, nach Format a -> 001}
+            \pnote{Beispiel an Tafel!}
+    \end{itemize}
 \end{frame}
 
 \section{Tools}
