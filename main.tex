@@ -54,6 +54,9 @@
             \pause
         \item Wird in quasi jeder Domäne genutzt
             \pnote{Embedded, Betriebssysteme, Systemnahe Entwicklung, Signalverarbeitung (Codierung), Desktop-Anwendungen, Spiele, Server-Anwendungen, HPC...}
+            \pause
+        \item Ziele: Sicherer und performanter Code
+            \pnote{Sicheres Typensystem, checks zur Compile Time (unterschied zur Run Timer hervorheben), maschinennah}
     \end{itemize}
 \end{frame}
 
@@ -64,7 +67,8 @@
             \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht vom Compiler kontrolliert werden und zur Runtime gibt es keine passnden Mechanismen  z.B. Microcontroller. Aber quasi jede Sprache hat undefiniertes Verhalten bezeichnet es aber nicht so (z.B. Race-Conditions)}
             \pause
         \item Keine automatische Speicherverwaltung 
-            \pnote{Keine Aufgabe der Sprache, wenn benötigt liefert die STL passende Container. Bei Microcontroller oder Echtzeitanwendungen nicht gewünscht}
+            \pnote{Keine Aufgabe der Sprache, wenn benötigt liefert die STL passende Container. Bei Microcontroller oder Echtzeitanwendungen nicht gewünscht.
+            Unterscheidung Heap und Stack hervorheben.}
             \pause
         \item Kleiner Sprachkern und kleine Standardlibrary 
             \pnote{60 Schlüsselwörter, C\# z.B. 86. Keine UI, kein Networking...}
