@@ -19,11 +19,11 @@ git config user.email "deploy@travis-ci.org"
 echo '[deploy_gh-pages]: copy new files'
 if [ "$TRAVIS_BRANCH" == "master" ]; then
     rm -f *
-    cp ../../output/* .
+    cp ../../* .
 else
     rm -rf "$TRAVIS_BRANCH"
     mkdir -p "$TRAVIS_BRANCH"
-    cp ../../output/* ./"$TRAVIS_BRANCH"/
+    cp ../../* ./"$TRAVIS_BRANCH"/
 fi
 
 echo '[deploy_gh-pages]: git add & commit'
