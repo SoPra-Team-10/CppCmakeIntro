@@ -182,7 +182,7 @@
         \item \lstinline{int b = 17; int *a = &b;}
             \pnote{Pointer als Referenz}
             \pause
-        \item \lstinline{int c = new int();}
+        \item \lstinline{int *c = new int();}
             \pnote{Pointer als Owner, Hier gleich ein potentieller Leak}
             \pause
         \item \lstinline{delete c;}
@@ -363,7 +363,7 @@
 
     \lstinline[language=bash]{sudo apt install -y gcc-8 g++-8 make cmake build-essential}
 
-    \lstinline[language=bash]{update-alternatives --config gcc}
+    \lstinline[language=bash]{update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8}
 
     \vspace{1cm}
 

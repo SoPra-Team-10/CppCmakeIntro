@@ -1,4 +1,4 @@
-A::A(int c) : B{c}, d{d} {
+A::A(int c, int d) : B{c}, d{d} {
     // More code
 }
 
