@@ -8,7 +8,7 @@ script:
     - latexmk -pdf main.tex 
 
 notifications:
-    slack: soprateam10:wlcgvL7tR63frGyGP4BCuqNj
+  slack: soprateam10:VZTkLGCdekl9mruMlJivbk5q
     
 deploy:
     provider: script
