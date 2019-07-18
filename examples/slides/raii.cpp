@@ -1,5 +1,5 @@
-int readJsonFromFile(const std::string &fileName) {
-    File f{fileName}
-    Json j = f.parse();
-    return j.at("ABC");
+void doStuff() {
+    std::lock_guard<std::mutex> lockGuard{mutex};
+    shared_resource = 17;
+    shared_resource += functionThatCanThrow();
 }

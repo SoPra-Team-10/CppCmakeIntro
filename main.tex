@@ -61,7 +61,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{C++ im Vergleich zu Java, C\#}
+    \frametitle{C++ im Vergleich zu Java}
     \begin{itemize}
         \item Undefiniertes Verhalten 
             \pnote{Null-Pointer, fehlendes Return, division durch Null. Kann nicht vom Compiler kontrolliert werden und zur Runtime gibt es keine passnden Mechanismen  z.B. Microcontroller. Aber quasi jede Sprache hat undefiniertes Verhalten bezeichnet es aber nicht so (z.B. Race-Conditions)}
@@ -191,6 +191,11 @@
         \item Gehört nicht in die Anwendungslogik
             \pnote{Permanente Fehlerquelle, Zeitverschwendung, Ab jetzt als Raw-Pointer bezeichnet und nie wieder verwenden!}
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Stack vs. Heap}
+    ctor, dtor
 \end{frame}
 
 \begin{frame}
@@ -344,56 +349,9 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Lambda-Ausdrücke und Funktionen}
-    \lstinputlisting{examples/slides/lambda.cpp}
-    \pnote{Lambda, capute group, argumente. Bind um Argumente fest zu binden (oder Reihenfolge ändern)}
-\end{frame}
-
-\begin{frame}
     \frametitle{Kurzeinführung Templates als Generics}
     \lstinputlisting{examples/slides/template.cpp}
     \pnote{Definition von template mit Typen, Type Deduktion}
-\end{frame}
-
-\section{Praxis: Einrichten der Entwicklungsumgebung}
-
-\begin{frame}
-    \frametitle{Linux (Ubuntu basiert)}
-    \lstinline[language=bash]{sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test}
-
-    \lstinline[language=bash]{sudo apt install -y gcc-8 g++-8 make cmake build-essential}
-
-    \lstinline[language=bash]{update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8}
-
-    \vspace{1cm}
-
-    \lstinline[language=bash]{sudo snap install clion --classic}
-    \pnote{Bisschen hässlich weil GCC 8 nicht in den Paketquellen}
-\end{frame}
-
-\begin{frame}
-    \frametitle{macOs}
-    \lstinline[language=bash]{xcode-select --install}
-
-    \vspace{1cm}
-
-    CLion runterladen und installieren: 
-    
-    \url{https://www.jetbrains.com/clion/download/\#section=mac}
-
-    \vspace{1cm}
-
-    Siehe Anleitung: 
-    
-    \url{https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-macos.html}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Windows}
-
-    Anleitung befolgen und hoffen: 
-    
-    \url{https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-windows.html}
 \end{frame}
 
 \section{STL}
@@ -491,35 +449,6 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Algorithmen}
-    \begin{itemize}
-        \item \lstinline{std::transform}
-            \pnote{Wendet eine Funktion auf jedes Element eines Containers an}
-            \pause
-        \item \lstinline{std::sort}
-            \pnote{Sortiert ein Container, es kann ein eigener Komperator angegeben werden}
-            \pause
-        \item \lstinline{std::max}, \lstinline{std::max\_element} \ldots
-            \pnote{Findet größtes/kleinstes Element/Index}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{IO}
-    \pnote{Alles auf Basis von "Streams"}
-    \begin{itemize}
-        \item \lstinline{std::istream} und \lstinline{std::ostream}
-            \pnote{Abstrakte input und output Streams}
-            \pause
-        \item \lstinline{std::cout}, \lstinline{std::cerr} und \lstinline{std::cin}
-            \pnote{Stellen Streams zur Verfügung für Standardein-/Ausgabe}
-            \pause
-        \item \lstinline{std::fstream}
-            \pnote{Dateistream (RAII!)}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
     \frametitle{Concurrency}
     \begin{itemize}
         \item \lstinline{std::thread}
@@ -584,12 +513,6 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Doxygen}
-    \lstinputlisting{examples/slides/doxygen.cpp}
-    \pnote{Vergleiche JavaDoc, besonderheit: tparam. Beispiel Generiertes HTML}
-\end{frame}
-
-\begin{frame}
     \frametitle{Debugging und Fehlersuche}
     \begin{itemize}
         \item Debugger
@@ -604,11 +527,6 @@
         \item clang-tidy
             \pnote{Statische Analyse, Fehler vor der Compilieren entdecken}
     \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \Huge{Beispiel: Tools}
-    \pnote{Segfault bauen, GDB nutzen Valgrind und Asan nutzen in CLion, z.B. Referenz auf Vector und dann push\_back}
 \end{frame}
 
 \section{Abschluss}
