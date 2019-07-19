@@ -3,5 +3,5 @@ class A : public B {
         A(int c, int d);
         auto getC() const -> int;
     private:
-        const int d;
+        int d;
 };

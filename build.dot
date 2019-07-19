@@ -1,0 +1,83 @@
+digraph {
+    fontname = "Helvetica"
+    fontsize = 8
+
+    node [
+        fontname = "Helvetica"
+        fontsize = 8
+        shape = "record"
+        fillcolor = "gray"
+        style = "filled"
+    ]
+
+    edge [
+        fontname = "Helvetica"
+        fontsize = 8
+        arrowhead = "normal"
+    ]
+
+    ah [
+        label = "a.hpp"
+    ]
+
+    bh [
+        label = "b.hpp"
+    ]
+
+    ch [
+        label = "c.hpp"
+    ]
+
+    acpp [
+        label = "a.cpp"
+    ]
+
+    bcpp [
+        label = "b.cpp"
+    ]
+
+    ao [
+        label = "a.o"
+    ]
+
+    bo [
+        label = "b.o"
+    ]
+
+    aout [
+        label = "program"
+    ]
+
+    ah -> acpp [
+        label = "Präprozessor"
+    ]
+
+    bh -> bcpp [
+        label = "Präprozessor"
+    ]
+
+    ch -> acpp [
+        label = "Präprozessor"
+    ]
+
+    ch -> bcpp [
+        label = "Präprozessor"
+    ]
+
+    acpp -> ao [
+        label = "Compiler"
+    ]
+
+    bcpp -> bo [
+        label = "Compiler"
+    ]
+
+    ao -> aout [
+        label = "Linker"
+    ]
+
+    bo -> aout [
+        label = "Linker"
+    ]
+    
+}

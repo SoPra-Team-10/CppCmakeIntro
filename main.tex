@@ -100,22 +100,30 @@
 
 \begin{frame}
     \frametitle{Vom Sourcecode zur ausführbaren Datei}
-    \begin{itemize}
-        \item Präprozessor 
-            \pnote{Erklärung include und define an Hello World Bsp (gcc -E), einfache Textersetzung, Erklärung an Tafel}
-            \pause
-        \item C++-Compiler 
-            \pnote{Übersetzten von der Übersetzungseinheit in Maschinencode, Übersetzungseinheit definieren}
-            \pause
-        \item Linker 
-            \pnote{Baut Programm zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
-            \pause
-        \item includes sichern Typkonsitenz
-            \pnote{Unterschied Definition und Deklaration, Doku im Header gut für Übersicht}
-            \pause
-        \item Templates müssen im Header definiert werden
-            \pnote{Compiler muss alle instanziierungen kennen, langsamer Buildprozess}
-    \end{itemize}
+    \begin{columns}
+        \begin{column}{.5\textwidth}
+            \begin{itemize}
+                \item<+-> Präprozessor 
+                    \pnote{Erklärung include und define an Hello World Bsp (gcc -E), einfache Textersetzung, Erklärung an Tafel}
+                \item<+-> C++-Compiler 
+                    \pnote{Übersetzten von der Übersetzungseinheit in Assemblercode, Übersetzungseinheit definieren}
+                    %\pause
+                \item<+-> Linker 
+                    \pnote{Baut Programm zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
+                    %\pause
+                \item<+-> includes sichern Typkonsitenz
+                    \pnote{Unterschied Definition und Deklaration, Doku im Header gut für Übersicht}
+                    %\pause
+                \item<+-> Templates müssen im Header definiert werden
+                    \pnote{Compiler muss alle instanziierungen kennen, langsamer Buildprozess}
+            \end{itemize}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{figure}
+                \includegraphics[width=\textwidth]{build.pdf}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
@@ -199,15 +207,15 @@
     \begin{columns}
         \begin{column}{.5\textwidth}
             \begin{itemize}
-                \item Hauptspeicher (RAM) wird aus zwei Richtungen vergeben
+                \item<+-> Hauptspeicher (RAM) wird aus zwei Richtungen vergeben
                     \pnote{Aufteilung in Stack für Performance und Heap für dynamischen Speicher}
-                \item Stack wird für Funktion aufgebaut
+                \item<+-> Stack wird für Funktion aufgebaut
                     \pnote{Schnell da FILO, wird automatisch wieder abgebaut}
-                \item Heap für dynamischen Speicher
+                \item<+-> Heap für dynamischen Speicher
                     \pnote{Langsam, freier Speicher muss erst gefunden werden}
-                \item Speicher auf dem Heap muss händisch reserviert und freigegeben werden
+                \item<+-> Speicher auf dem Heap muss händisch reserviert und freigegeben werden
                     \pnote{Memory Leak wenn nicht wieder freigegeben}
-                \item Bei mehr als einem Owner Verwaltung kompliziert
+                \item<+-> Bei mehr als einem Owner Verwaltung kompliziert
                     \pnote{Owner: Funktion die Pointer kennt}
             \end{itemize}
         \end{column}
@@ -271,7 +279,7 @@
 \begin{frame}
     \frametitle{Zusammenfassung Pointer}
     \begin{itemize}
-        \item Raw-Pointer: Wird quasi nie verwendet
+        \item Raw-Pointer: Sollte quasi nie verwendet werden
             \pnote{Ausser pre C++11 und mit C APIs}
             \pause
         \item Unique-Pointer: Ersatz für Raw-Pointer
@@ -420,18 +428,6 @@
         \item \lstinline{std::shared\_ptr<T>}
             \pnote{Siehe oben}
             \pause
-        \item \lstinline{std::chrono}
-            \pnote{Nur der Namespace, diverseste Funktionen}
-            \pause
-        \item \lstinline{std::sin()} \ldots
-            \pnote{Auch exotisches wie Riemann-Zeta Funktion}
-            \pause
-        \item \lstinline{std::complex} \ldots
-            \pnote{Komplexe Zahlen und Hilfsfunktionen}
-            \pause
-        \item \lstinline{std::normal\_distribution} \ldots
-            \pnote{Diverse Verteilungen und RNGs}
-            \pause
         \item \lstinline{std::function<T(A...)>}
             \pnote{Behandlung von Callable (Funktionen) wie Variablen (vgl. Funktionspointer)}
     \end{itemize}
@@ -474,23 +470,6 @@
     \frametitle{for-each}
     \lstinputlisting{examples/slides/foreach.cpp}
     \pnote{Deutlich kürzer, sicher beachte const Referenz, nur wenn Funktionen const}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Concurrency}
-    \begin{itemize}
-        \item \lstinline{std::thread}
-            \pnote{Startet neuen Thread aus callable}
-            \pause
-        \item \lstinline{std::launch} und \lstinline{std::future<T>}
-            \pnote{Abstraktion, asynchroner Funktionsaufruf. Ergebnis in std::future}
-            \pause
-        \item \lstinline{std::mutex} und \lstinline{std::lock\_guard<T>}
-            \pnote{Gegenseitiger Ausschluss. lock_guard sperrt und entsperrt automatisch (RAII!)}
-            \pause
-        \item \lstinline{std::atomic<T>}
-            \pnote{Effiziente und kompakte Lösung für einzelne Variablen, auf denen Operationen Atomar sein sollen}
-    \end{itemize}
 \end{frame}
 
 \section{Praxis}
