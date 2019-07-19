@@ -112,7 +112,7 @@
                 \item<+-> Linker 
                     \pnote{Baut Programm zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
                     %\pause
-                \item<+-> includes sichern Typkonsitenz
+                \item<+-> \lstinline{\#include}s sichern Typkonsistenz
                     \pnote{Unterschied Definition und Deklaration, Doku im Header gut für Übersicht}
                     %\pause
                 \item<+-> Templates müssen im Header definiert werden
@@ -136,7 +136,7 @@
 \section{CMake}
 
 \begin{frame}
-    \frametitle{Warum CMake}
+    \frametitle{Warum ein Buildsystem}
     \begin{itemize}
         \item Nur geänderte Dateien neu kompilieren 
             \pnote{erkennt welche Files geändert wurde, größere Projekte kompilieren sonst jedes mal mehrere Minuten bis Stunden}
@@ -147,6 +147,12 @@
         \item Portabilität
             \pnote{Compiler und Flags werden unnabhängig vom Os und von installierten Compilern angegeben}
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CMake}
+    Wird durch Datei \lstinline{CMakeLists.txt} konfiguriert:
+    \lstinputlisting{examples/slides/CMakeLists.txt}
 \end{frame}
 
 \begin{frame}
@@ -236,6 +242,11 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Beispiel Pointer}
+    \lstinputlisting{examples/slides/pointer.cpp}
+\end{frame}
+
+\begin{frame}
     \frametitle{Smart-Pointer}
     \begin{itemize}
         \item Funktionen aus der Standardlibrary
@@ -319,8 +330,8 @@
         \item \lstinline{int getX() const \{...}
             \pnote{Const am ende der Definition this ist in der Funktion konstant}
             \pause
-        \item Mutable
-            \pnote{Beispiel Mutex, Caching, nicht immer!}
+        \item \lstinline{mutable}
+            \pnote{Beispiel Log}
     \end{itemize}
 \end{frame}
 
@@ -357,6 +368,15 @@
     \frametitle{Klassendefinition}
     \lstinputlisting{examples/slides/class.cpp}
     \pnote{Initializierung in Braced-Initializer, Super-Konstruktor, this als Pointer}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Namespaces}
+    \lstinputlisting{examples/slides/namespace.cpp}
+    \begin{itemize}
+        \item Struktur
+        \item Keinen Einfluss auf Sichtbarkeit
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -423,38 +443,20 @@
         \centering
         \begin{tabular}{c|ccc}
             \toprule
-            & Auf Element zugreifen & Element einfügen & \\
+            & Auf Element zugreifen & Element einfügen \\
             \midrule
-            \lstinline{std::array<T, N>} & $\mathcal{O}(1)$ \\
-            \lstinline{std::vector< N>} \\
-            \lstinline{std::deque< N>} \\
-            \lstinline{std::list< N>} \\
+            \lstinline{std::array<T, N>} & $\mathcal{O}(1)$ & X \\
+            \lstinline{std::vector< N>} & $\mathcal{O}(1)$ & $\mathcal{O}(n)$ \\
+            \lstinline{std::deque< N>} & $\mathcal{O}(1)$ & $\mathcal{O}(n)$ bzw. $\mathcal{O}(1)$ \\
+            \lstinline{std::list< N>} & $\mathcal{O}(n)$ & $\mathcal{O}(1)$ \\
             \bottomrule
         \end{tabular}
     \end{figure}
+    \pnote{Größe muss zu Compile-Time feststehen, wie Array in C nur Sicher, Zugriff O(1), Einfügen unmöglich}
+    \pnote{Dynamisch angelegtes Array, Elemente können hinzugefügt werden aber nicht effizient, Zugriff O(1), Einfügen worst case O(n)}
+    \pnote{Verlinkte Array-Liste, Zugriff O(1) (aber langsamer als vector), Einfügen an einem Ende O(1), Einfügen in der Mitte O(n)}
+    \pnote{Einfach bzw. doppelt verkettete Liste, Zugriff O(1), Einfügen O(1)}
 
-    \begin{itemize}
-        \item \lstinline{std::array<T, N>}
-            \pnote{Größe muss zu Compile-Time feststehen, wie Array in C nur Sicher, Zugriff O(1), Einfügen unmöglich}
-            \pause
-        \item \lstinline{std::vector<T>}
-            \pnote{Dynamisch angelegtes Array, Elemente können hinzugefügt werden aber nicht effizient, Zugriff O(1), Einfügen worst case O(n)}
-            \pause
-        \item \lstinline{std::deque<T>}
-            \pnote{Verlinkte Array-Liste, Ausprache!, Zugriff O(1) (aber langsamer als vector), Einfügen an einem Ende O(1), Einfügen in der Mitte O(n)}
-            \pause
-        \item \lstinline{std::list<T>} und \lstinline{std::forward\_list<T>}
-            \pnote{Einfach bzw. doppelt verkettete Liste, Zugriff O(1), Einfügen O(1)}
-            \pause
-        \item \lstinline{std::set<T>} und \lstinline{std::map<K, V>}
-            \pnote{Menge und Abbildung von Key auf Value, finden von Elementen in O(log(n(), einfügen in O(log(n))}
-            \pause
-        \item \lstinline{std::tuple<T...>} und \lstinline{std::pair<T1, T2>}
-            \pnote{Genau genommen kein Container, Sammlung von mehreren bzw. 2 Objekten von unterschiedlichem Typ. Typen und Anzahl müssen zu Compile-Time bekannt sein}
-            \pause
-        \item \lstinline{std::optional<T>}
-            \pnote{Variable vom Typ T die nicht existieren muss, zum Beispiel als Return-Wert mit Fehler}
-    \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -468,6 +470,20 @@
     \frametitle{for-each}
     \lstinputlisting{examples/slides/foreach.cpp}
     \pnote{Deutlich kürzer, sicher beachte const Referenz, nur wenn Funktionen const}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Weitere Container und Aggregationstypen}
+    \begin{itemize}
+        \item Assoziative-Container: \lstinline{std::set<T>} und \lstinline{std::map<K, V>}
+            \pnote{Menge und Abbildung von Key auf Value, finden von Elementen in O(log(n(), einfügen in O(log(n))}
+            \pause
+        \item Sammlung verschiedener Objekte: \lstinline{std::tuple<T...>} und \lstinline{std::pair<T1, T2>}
+            \pnote{Sammlung von mehreren bzw. 2 Objekten von unterschiedlichem Typ. Typen und Anzahl müssen zu Compile-Time bekannt sein}
+            \pause
+        \item Objekt das nicht vorhanden sein muss: \lstinline{std::optional<T>}
+            \pnote{Variable vom Typ T die nicht existieren muss, zum Beispiel als Return-Wert mit Fehler}
+    \end{itemize}
 \end{frame}
 
 \section{Praxis}
@@ -562,16 +578,16 @@
 \begin{frame}
     \frametitle{Mehr Informationen}
     \begin{itemize}
-        \item en.cppreference.com
+        \item \url{en.cppreference.com}
             \pnote{Dokumentation der Sprache und STL, deutsche Version ist Shit}
             \pause
-        \item github.com/isocpp/CppCoreGuidelines
+        \item \url{github.com/isocpp/CppCoreGuidelines}
             \pnote{Gut für Designentscheidungen}
             \pause
-        \item godbolt.org
+        \item \url{godbolt.org}
             \pnote{Was erzeugt der Compiler für Code auf unterschiedlichen Plattformen, eher als Spielzeug}
             \pause
-        \item github.com/SoPra-Team-10/CppCMakeIntro
+        \item \url{github.com/SoPra-Team-10/CppCMakeIntro}
             \pnote{Dieser Vortrag}
             \pause
         \item Scott Meyers: Effective Modern C++
