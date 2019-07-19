@@ -5,6 +5,7 @@
 \usepackage{pdfpcnotes}
 \usepackage{listings}
 \usepackage{tikz}
+\usepackage{booktabs}
 
 \usetheme{Hannover}
 \usecolortheme{dove}
@@ -417,24 +418,21 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Utility}
-    \begin{itemize}
-        \item \lstinline{std::string}
-            \pnote{Wie in Java}
-            \pause
-        \item \lstinline{std::unique\_ptr<T>}
-            \pnote{Siehe oben}
-            \pause
-        \item \lstinline{std::shared\_ptr<T>}
-            \pnote{Siehe oben}
-            \pause
-        \item \lstinline{std::function<T(A...)>}
-            \pnote{Behandlung von Callable (Funktionen) wie Variablen (vgl. Funktionspointer)}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
     \frametitle{Container}
+    \begin{figure}
+        \centering
+        \begin{tabular}{c|ccc}
+            \toprule
+            & Auf Element zugreifen & Element einfügen & \\
+            \midrule
+            \lstinline{std::array<T, N>} & $\mathcal{O}(1)$ \\
+            \lstinline{std::vector< N>} \\
+            \lstinline{std::deque< N>} \\
+            \lstinline{std::list< N>} \\
+            \bottomrule
+        \end{tabular}
+    \end{figure}
+
     \begin{itemize}
         \item \lstinline{std::array<T, N>}
             \pnote{Größe muss zu Compile-Time feststehen, wie Array in C nur Sicher, Zugriff O(1), Einfügen unmöglich}
