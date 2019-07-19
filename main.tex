@@ -4,6 +4,7 @@
 \usepackage{soul}
 \usepackage{pdfpcnotes}
 \usepackage{listings}
+\usepackage{tikz}
 
 \usetheme{Hannover}
 \usecolortheme{dove}
@@ -194,8 +195,35 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Stack vs. Heap}
-    ctor, dtor
+    \frametitle{Stack und Heap}
+    \begin{columns}
+        \begin{column}{.5\textwidth}
+            \begin{itemize}
+                \item Hauptspeicher (RAM) wird aus zwei Richtungen vergeben
+                    \pnote{Aufteilung in Stack für Performance und Heap für dynamischen Speicher}
+                \item Stack wird für Funktion aufgebaut
+                    \pnote{Schnell da FILO, wird automatisch wieder abgebaut}
+                \item Heap für dynamischen Speicher
+                    \pnote{Langsam, freier Speicher muss erst gefunden werden}
+                \item Speicher auf dem Heap muss händisch reserviert und freigegeben werden
+                    \pnote{Memory Leak wenn nicht wieder freigegeben}
+                \item Bei mehr als einem Owner Verwaltung kompliziert
+                    \pnote{Owner: Funktion die Pointer kennt}
+            \end{itemize}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}
+                    \draw [draw] (0,0) rectangle (3,5);
+                    \filldraw [draw=black,fill=gray!20] (0,0) rectangle (3,1) node[pos=.5] {Stack};
+                    \filldraw [draw=black,fill=gray!20] (0,4.5) rectangle (3,5) node[pos=.5] {Heap};
+                    \filldraw [draw=black,fill=gray!20] (0,3.5) rectangle (3,4) node[pos=.5] {Heap};
+                    \draw [->] (1.5,1) -- (1.5,2);
+                \end{tikzpicture}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
