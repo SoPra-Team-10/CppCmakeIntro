@@ -1,0 +1,21 @@
+sudo: required
+dist: bionic
+before_install:
+    - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended latexmk texlive-lang-german texlive-font-utils texlive-science texlive-pictures rubber graphviz
+      
+git:
+    submodules: false 
+
+script:
+    - mkdir output
+    - make
+    - mv main.pdf output/main.pdf
+
+deploy:
+    provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+    keep-history: true
+    local-dir: output
+    on:
+        branch: master
