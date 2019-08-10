@@ -6,6 +6,7 @@
 \usepackage{listings}
 \usepackage{tikz}
 \usepackage{booktabs}
+\usepackage{minted}
 
 \usetheme{Hannover}
 \usecolortheme{dove}
@@ -36,7 +37,10 @@
 
 \begin{document}
 \maketitle
+
 \frame{
+    \pnote{Sofort Fragen!}
+    \pnote{Feedback erwünscht}
     \tableofcontents
 }
 
@@ -47,9 +51,6 @@
     \begin{itemize}
         \item \st{C with classes}
             \pnote{Ursprünglicher Name, da initial nur Erweiterung von C um Objektorientung}
-            \pause
-        \item C++11!
-            \pnote{Inzwischen weiter von C entfernt, mehr Konstrukte um sicheren und effizienten Code zu schreiben (Verweis Titel). Neuer Standard inzwischen 17 bald 20. Benennung: 98: 98 und 03. 11: 11 - 17}
             \pause
         \item Standardisiert und offen
             \pnote{Viele Compiler, Gute Dokumentation,  Entscheidungen werden im Komitee getroffen, nicht von einzelnen Firmen}
@@ -152,7 +153,7 @@
 \begin{frame}
     \frametitle{CMake}
     Wird durch Datei \lstinline{CMakeLists.txt} konfiguriert:
-    \lstinputlisting{examples/slides/CMakeLists.txt}
+    \inputminted{cmake}{examples/slides/CMakeLists.txt}
 \end{frame}
 
 \begin{frame}
@@ -244,16 +245,18 @@
 \begin{frame}
     \frametitle{Beispiel Pointer}
     \lstinputlisting{examples/slides/pointer.cpp}
+    \pnote{Auf Stack: Kein Owner}
+    \pnote{Auf Heap: Owner}
 \end{frame}
 
 \begin{frame}
     \frametitle{Smart-Pointer}
     \begin{itemize}
-        \item Funktionen aus der Standardlibrary
+        \item Standardlibrary kann Verwaltung übernehmen
             \pnote{Erwähnung Operatorenüberladung und Lifetime}
             \pause
-        \item unique\_ptr 
-            \pnote{Quasi Drop-In-Replacement für Raw-Ptr, machen selber den Speicher am Ende der Lebenszeit Frei}
+        \item \lstinline{unique\_ptr}
+            \pnote{Quasi Drop-In-Replacement für Raw-Ptr, machen selber den Speicher am Ende der Lebenszeit frei}
             \pause
         \item Genau ein Owner
             \pnote{Explizit verboten zu kopieren (=delete), Bsp. kopieren in Klasse, jetzt uneindeutiger Owner. Oftmals für Factory Methoden, kein Overhead zu Raw-Pointer}
@@ -261,7 +264,7 @@
         \item
             \lstinline{std::unique\_ptr<int> a = std::make\_unique<int>(17);}
             \pause
-        \item shared\_ptr 
+        \item \lstinline{shared\_ptr}
             \pnote{Zusätzlich Zählen von Instanzen (siehe Copy-Constructor)}
             \pause
         \item Quasi immer nutzbar
@@ -291,13 +294,13 @@
 \begin{frame}
     \frametitle{Zusammenfassung Pointer}
     \begin{itemize}
-        \item Raw-Pointer: Sollte quasi nie verwendet werden
+        \item Raw-Pointer: Sollten quasi nie verwendet werden
             \pnote{Ausser pre C++11 und mit C APIs}
             \pause
-        \item Unique-Pointer: Ersatz für Raw-Pointer
+        \item Unique-Pointer: Oftmals ersatz für Raw-Pointer
             \pnote{Limitierung: Ein Owner kein Overhead}
             \pause
-        \item Shared-Pointer: Sichere Pointer für beliebig viele Ownerr
+        \item Shared-Pointer: Sichere Pointer für beliebig viele Owner
             \pnote{Am Ähnlichsten zu Java, aber etwas Overhead (immer noch weniger als Java und definierte Lifetime)}
             \pause
         \item Referenzen: Oftmals um Kopien zu vermeiden
@@ -316,7 +319,7 @@
     \frametitle{Const-Correctness}
     \begin{itemize}
         \item Alles per Referenz: Super Effizient aber Fehlerquelle
-            \pnote{Beispiel: ausversehen einfügen in Map, allgemeine Fehlerquelle immer nur minimale Rechte}
+            \pnote{Beispiel: ausversehen einfügen in Map, allgemeine Fehlerquelle immer nur minimale Rechte, Dokumentation}
             \pause
         \item Const-Referenzen
             \pnote{Ergänze Beispiel}
@@ -344,7 +347,7 @@
     \frametitle{RAII}
     \begin{itemize}
         \item Resource acquisition is initialization
-            \pnote{Fehlerreduktion, Einfachheit}
+            \pnote{Fehlerreduktion, Einfachheit, Exception Safety}
             \pause
         \item Objekt akquiriert Resourcen im Konstruktor und gibt sie im
             Destruktor frei
@@ -373,8 +376,10 @@
 \begin{frame}
     \frametitle{Namespaces}
     \lstinputlisting{examples/slides/namespace.cpp}
+    \pause
     \begin{itemize}
         \item Struktur
+            \pause
         \item Keinen Einfluss auf Sichtbarkeit
     \end{itemize}
 \end{frame}
@@ -463,7 +468,7 @@
     \frametitle{Iteratoren}
     \lstinputlisting{examples/slides/iterator.cpp}
     \pnote{Type deduction wäre möglich (auto). Wie Pointer nur abstrakt, z.B. auch bei Liste, zentrales Element für Container und Algorithmen,
-    abstraktion von Container, wieso nicht at O(n) in Liste}
+        abstraktion von Container, wieso nicht at O(n) in Liste}
 \end{frame}
 
 \begin{frame}
@@ -483,45 +488,6 @@
             \pause
         \item Objekt das nicht vorhanden sein muss: \lstinline{std::optional<T>}
             \pnote{Variable vom Typ T die nicht existieren muss, zum Beispiel als Return-Wert mit Fehler}
-    \end{itemize}
-\end{frame}
-
-\section{Praxis}
-\begin{frame}
-    \Huge{Praxis: \pause Huffman-Codierer}
-    \pnote{Begründung: Baum nicht als STL-Datenstrukur, trotzdem STL Container notwendig, Templates, Pointer, in unter 150 Zeilen lösbar}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Vorgehen}
-    \begin{itemize}
-        \item Datei einlesen
-            \pnote{Streams nutzen}
-            \pause
-        \item Relative Häufigkeiten ($\approx$ Wahrscheinlichkeiten) berechnen (Byteweise)
-            \pnote{Blockgröße 8-bit}
-            \pause
-        \item Huffman-Baum konstruieren
-            \pause
-            \pnote{Erstmal separate Template-Klasse für Baum, dann nutzen für Huffman}
-            \begin{itemize}
-                \item Menge aller Symbole mit zugehörigen Wahrscheinlichkeiten
-                    \pnote{Nach passender Datenstruktur für Menge und Symbol mit Wahrscheinlichkeit fragen}
-                    \pause
-                \item Zwei Symbole geringster Wahrscheinlichkeit finden
-                    \pnote{Effizienz, jedes mal suchen, ein mal sortieren?}
-                    \pause
-                \item Symbole aus Menge Entfernen
-                    \pnote{Recherche wie in STL möglich}
-                    \pause
-                \item Zu neuem Knoten kombinieren
-                    \pause
-                \item Knoten zu Menge hinzufügen
-                    \pause
-            \end{itemize}
-        \item Abbildung ausgeben
-            \pnote{Durch Baum laufen, nach Format a -> 001}
-            \pnote{Beispiel an Tafel!}
     \end{itemize}
 \end{frame}
 
@@ -594,5 +560,45 @@
             \pnote{Gutes Buch, deutliche Vertiefung}
     \end{itemize}
 \end{frame}
+
+\section{Praxis}
+\begin{frame}
+    \Huge{Praxis: \pause Huffman-Codierer}
+    \pnote{Begründung: Baum nicht als STL-Datenstrukur, trotzdem STL Container notwendig, Templates, Pointer, in unter 150 Zeilen lösbar}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Vorgehen}
+    \begin{itemize}
+        \item Datei einlesen
+            \pnote{Streams nutzen}
+            \pause
+        \item Relative Häufigkeiten ($\approx$ Wahrscheinlichkeiten) berechnen (Byteweise)
+            \pnote{Blockgröße 8-bit}
+            \pause
+        \item Huffman-Baum konstruieren
+            \pause
+            \pnote{Erstmal separate Template-Klasse für Baum, dann nutzen für Huffman}
+            \begin{itemize}
+                \item Menge aller Symbole mit zugehörigen Wahrscheinlichkeiten
+                    \pnote{Nach passender Datenstruktur für Menge und Symbol mit Wahrscheinlichkeit fragen}
+                    \pause
+                \item Zwei Symbole geringster Wahrscheinlichkeit finden
+                    \pnote{Effizienz, jedes mal suchen, ein mal sortieren?}
+                    \pause
+                \item Symbole aus Menge Entfernen
+                    \pnote{Recherche wie in STL möglich}
+                    \pause
+                \item Zu neuem Knoten kombinieren
+                    \pause
+                \item Knoten zu Menge hinzufügen
+                    \pause
+            \end{itemize}
+        \item Abbildung ausgeben
+            \pnote{Durch Baum laufen, nach Format a -> 001}
+            \pnote{Beispiel an Tafel!}
+    \end{itemize}
+\end{frame}
+
 
 \end{document}

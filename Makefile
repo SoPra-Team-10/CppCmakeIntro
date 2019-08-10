@@ -1,15 +1,21 @@
 RUBBER=rubber
 DOT=dot
-EVINCE=evince
+VIEWER=evince
+PRESENTER=pdfpc
 
-all: build.pdf
-	$(RUBBER) -d main.tex
+all: main.pdf
+
+main.pdf: build.pdf main.tex
+	$(RUBBER) --unsafe -d main.tex
 
 build.pdf: build.dot
 	$(DOT) -T pdf -o build.pdf build.dot
 
-show: all
-	$(EVINCE) main.pdf 2> /dev/null
+show: main.pdf
+	$(VIEWER) main.pdf 2> /dev/null
+
+present: main.pdf
+	$(PRESENTER) main.pdf
 
 clean:
 	rm -f *.toc
