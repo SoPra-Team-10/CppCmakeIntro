@@ -58,7 +58,7 @@
         \item Wird in quasi jeder Domäne genutzt
             \pnote{Embedded, Betriebssysteme, Systemnahe Entwicklung, Signalverarbeitung (Codierung), Desktop-Anwendungen, Spiele, Server-Anwendungen, HPC...}
             \pause
-        \item Ziele: Sicherer und performanter Code
+        \item Ziele: Performanter und sicherer Code
             \pnote{Sicheres Typensystem, checks zur Compile Time (unterschied zur Run Timer hervorheben), maschinennah}
     \end{itemize}
 \end{frame}
@@ -107,15 +107,12 @@
             \begin{itemize}
                 \item<+-> Präprozessor 
                     \pnote{Erklärung include und define an Hello World Bsp (gcc -E), einfache Textersetzung, Erklärung an Tafel}
-                \item<+-> C++-Compiler 
+                \item<+-> Compiler 
                     \pnote{Übersetzten von der Übersetzungseinheit in Assemblercode, Übersetzungseinheit definieren}
-                    %\pause
                 \item<+-> Linker 
                     \pnote{Baut Programm zusammen und sucht Funktionen in anderen Übersetzungseinheiten}
-                    %\pause
                 \item<+-> \lstinline{\#include}s sichern Typkonsistenz
                     \pnote{Unterschied Definition und Deklaration, Doku im Header gut für Übersicht}
-                    %\pause
                 \item<+-> Templates müssen im Header definiert werden
                     \pnote{Compiler muss alle instanziierungen kennen, langsamer Buildprozess}
             \end{itemize}
@@ -401,6 +398,10 @@
             \pause
         \item \lstinline{0}, \lstinline{NULL} und \lstinline{nullptr}
             \pnote{Abstammung aus C, Erklärung mit Überladung}
+            \pause
+        \item Trailing \lstinline{return}-type 
+            \lstinputlisting{examples/slides/trailingreturn.cpp}
+            \pnote{Mathematische Notation, oftmals einfacher zu lesen}
     \end{itemize}
 \end{frame}
 

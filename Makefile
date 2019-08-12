@@ -27,8 +27,9 @@ clean:
 	rm -f *-blx.bib  
 	rm -f *.fdb_latexmk
 	rm -f *.xml
-	rm *.bcf
-	rm build.png
+	rm -f *.bcf
+	rm -f build.png
+	rm -rf _minted-main
 
 clean_all: clean
 	rm *.pdf

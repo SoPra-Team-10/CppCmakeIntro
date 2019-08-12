@@ -2,6 +2,6 @@ A::A(int c, int d) : B{c}, d{d} {
     // More code
 }
 
-auto A::getC() const -> int {
+int A::getC() const {
     return this->c;
 }
